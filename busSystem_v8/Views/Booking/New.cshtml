@@ -1,0 +1,169 @@
+﻿@model busSystem_v8.View_Models.UserBooking
+@using busSystem_v8.Models
+@{
+   var info = Session["userData"] as User;
+}
+<section style="position:relative;min-height:1000px;">
+        <img src="~/Content/img/service/SLIDER-3.jpg" 
+             style="position:absolute ; width:100%;height:1100px;
+opacity:.3
+    " />
+        <h2> Booking  </h2>
+        
+        <div class="col-lg-10 col-lg-offset-1" style="border:2px solid #808080;
+        border-radius:15px;padding:10px;background-color:rgba(128, 128, 128,0.3);
+        ">
+            <div class="alert alert-success" id="success" style="display:none;">
+                <strong>Booking Added Succesfully  </strong>
+            </div>
+            <div class="alert alert-danger" id="fail" style="display:none;">
+                <strong>Booking Failed !!  </strong>
+            </div>  
+            <form id="New" class="bs-component">
+                <div class="form-group has-success">
+                    @Html.LabelFor(x => x.user.Name)
+                    @Html.TextBoxFor(x => x.user.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.user.Name)
+                </div>
+                <div class="form-group has-warning">
+                    @Html.LabelFor(x => x.books.lines.From)
+                    @Html.DropDownListFor(x => x.books.Line_Id, new SelectList(Model.lines, "Id", "From"), "Choose Sourse : ", new { @id = "From", @class = "form-control" })
+                    @*   @Html.TextBoxFor(x => x.books.lines.From,  new { @class = "form-control" })*@
+                    @Html.ValidationMessageFor(x => x.books.Line_Id)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.books.lines.To)
+                    @Html.DropDownListFor(x => x.books.Line_Id, new List<SelectListItem>(), "Choose Destination : ", new { @id = "To", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.books.Line_Id)
+                    @*@Html.HiddenFor(x => x.books.Line_Id)*@
+                    @*@Html.HiddenFor(x=>x.books.Line_Id,new { @id="To_New"})*@
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.books.trips.StartDate)
+                    @Html.DropDownListFor(x => x.books.Trip_ID, new List<SelectListItem>(), "Choose Start Date ! : ", new { @id = "Trip", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.books.Trip_ID)
+                    @*@Html.HiddenFor(x => x.books.Trip_ID)*@
+
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.books.Buses.CompanyName)
+                    @Html.DropDownListFor(x => x.books.Bus_Id, new List<SelectListItem>(), "Choose Your Fav Bus : ", new { @id = "Bus", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.books.Bus_Id)
+                    @*@Html.HiddenFor(x => x.books.Bus_Id)*@
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.books.chosenChairs)
+                    @Html.TextBoxFor(x => x.books.chosenChairs, new { @class = "form-control", type = "number", placeholder = "Chooser Number " })
+                    @Html.ValidationMessageFor(x => x.books.chosenChairs)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.books.payment_types)
+                    @Html.DropDownListFor(x => x.books.Payment_Type_Id, new SelectList(Model.payment_Types, "ID", "pay_type"), "Choose Your Payment Type  : ", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.books.Payment_Type_Id)
+                </div>
+                <button type="button" value="Save" id="Save" class="btn btn-primary">Save </button>
+            </form>
+            </div>
+    </section>
+@section Scripts{
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+
+        $(document).ready(function () {
+            $("#From").change(function () {
+                id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "/Booking/getTo/" + id,
+                    success: function (response) {
+                        $("#To").empty();
+                        $("#To").append("<option>select destination </option>")
+
+                        response.forEach(function (entry) {
+                            $("#To").append("<option value ='" + entry.Line_Id + "' >" + entry.To + "</option>")
+                            //$ss = entry.Line_Id;
+                            //$("#To_New").html(ss);
+
+                        });
+                    }
+                })
+            })
+
+
+            $("#From").change(function () {
+                id = $(this).val();
+                //function AddLeadingZeros(number, size) {
+                //    var s = "0000" + number;
+                //    return s.substr(s.length - size);
+                //}
+                $.ajax({
+                    type: "GET",
+                    url: "/Booking/Trips/" + id,
+                    success: function (response) {
+                        $("#Trip").empty();
+                        $("#Trip").append("<option>select destination </option>")
+
+                        response.forEach(function (entry) {
+                            //var dt = new Date(parseInt(entry.StartDate.replace('/Date(', '')))
+                            //var dtFinal = AddLeadingZeros(dt.getFullYear(), 4) + '/' +
+                            //    AddLeadingZeros(dt.getMonth() + 1, 2) + '/' +
+                            //    AddLeadingZeros(dt.getDate(), 2)
+                            $("#Trip").append("<option value ='" + entry.Id + "'>" + entry.StartDate + "</option>")
+                            //$ss = entry.Line_Id;
+                            //$("#To_New").html(ss);
+                        });
+                    }
+                })
+            })
+
+
+
+            $("#Trip").change(function () {
+                id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "/Booking/Buses/" + id,
+                    success: function (response) {
+                        $("#Bus").empty();
+                        $("#Bus").append("<option>select destination </option>")
+
+                        response.forEach(function (entry) {
+                            $("#Bus").append("<option value ='" + entry.BusID + "' >" + entry.CompanyName + "</option>")
+                            //$ss = entry.Line_Id;
+                            //$("#To_New").html(ss);
+                        });
+                    }
+                })
+            })
+
+            $("#Save").click(function () {
+                if ($("#New").valid()) {
+                    mydata = $("#New").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "/Booking/New",
+                        data: mydata,
+                        success: function (response) {
+                            if (response.result == 1) {
+                                $("#success").slideDown(2000);
+                                $("#success").slideUp(1000);
+                            }
+                            else {
+                                $("#fail").slideDown(2000);
+                                $("#fail").slideUp(1000);
+                            }
+                        }
+                    })
+                }
+            })
+        })
+
+    </script>
+    }
+
+

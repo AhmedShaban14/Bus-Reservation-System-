@@ -1,0 +1,86 @@
+﻿@model IEnumerable<busSystem_v8.Models.Booking>
+
+@{
+    ViewBag.Title = "Book";
+}
+
+<h2>Book</h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.chosenChairs)
+        </dt>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_id)
+        </dt>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trip_ID)
+        </dt>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Line_Id)
+        </dt>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payment_Type_Id)
+        </dt>
+
+
+
+    </dl>
+</div>
+
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.chosenChairs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trip_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Line_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Payment_Type_Id)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit Customers", "EditCust", new { id = item.BokkingID }) |
+            @Html.ActionLink("Details Of Customers", "Details", new { id = item.BokkingID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BokkingID })
+        </td>
+    </tr>
+
+}
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,57 @@
+﻿@model busSystem_v8.PayModel.Product
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Paypal Payment</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            <label for="item_name">Trip</label>
+            @Html.TextBoxFor(x => x.item_name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.item_name)
+        </div>
+
+        <div class="form-group">
+            <label for="item_number">Trip Number</label>
+            @Html.TextBoxFor(x => x.item_number, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.item_number)
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Price</label>
+            @Html.TextBoxFor(x => x.amount, new { @class = "form-control" /*, placeholder = "Giá sản phẩm" */})
+            @Html.ValidationMessageFor(x => x.amount)
+        </div>
+    /*
+        <div class="form-group">
+            <label for="quantity">Item Quantity</label>
+            @Html.TextBoxFor(x => x.quantity, new { @class = "form-control", placeholdern = "Số lương sản phẩm" })
+            @Html.ValidationMessageFor(x => x.quantity)
+        </div>
+        */
+        <button type="submit" class="btn btn-success">Confirm</button>
+    }
+</div>
+<div class="col-md-12">
+    @Html.ActionLink("Submit", "Index", new {controller="Paypal"},new {@class = "btn btn-primary" })
+</div>
+</body>
+</html>

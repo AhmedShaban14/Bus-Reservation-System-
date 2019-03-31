@@ -1,0 +1,47 @@
+﻿@model busSystem_v8.Models.Line
+
+@{
+    ViewBag.Title = "showLine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>showLine</h2>
+
+@Html.ActionLink("Delete Line", "DeleteLine", new { Model.Id })
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(l => l.Id)
+    <div class="form-group ">
+        @Html.LabelFor(x => x.NumOfBuses)
+        <br />
+        @Html.DisplayFor(x => x.NumOfBuses, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.NumOfBuses)
+    </div>
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.NumOfHours)
+        <br />
+        @Html.DisplayFor(x => x.NumOfHours, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.NumOfHours)
+    </div>
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.From)
+        <br />
+        @Html.DisplayFor(x => x.From, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.From)
+    </div>
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.To)
+        <br />
+        @Html.DisplayFor(x => x.To, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.To)
+    </div>
+    <hr />
+
+}

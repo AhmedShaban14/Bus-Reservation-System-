@@ -1,0 +1,89 @@
+﻿@model IEnumerable<busSystem_v8.Models.Line>
+
+@{
+    ViewBag.Title = "AllLines";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AllLines</h2>
+
+<p>
+    @Html.ActionLink("Create New Line", "AddLine")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.From)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.To)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumOfBuses)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumOfHours)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr id="record_@item.Id">
+        <td>
+            @Html.DisplayFor(modelItem => item.From)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.To)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumOfBuses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumOfHours)
+        </td>
+        <td>
+            @Html.ActionLink("Edit Line", "Editline", new { id=item.Id }) |
+            @Html.ActionLink("Details", "showLine", new { id=item.Id }) |
+       @*   @Html.ActionLink("Delete Line", "DeleteLine", new { id=item.Id })*@  
+
+            <button type="button" value="Create" class="btn btn-primary" id="delete_line_btn" onclick="DeleteLine(@item.Id)"> Delete </button>
+
+        </td>
+    </tr>
+}
+
+</table>
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+    <script>
+
+        function DeleteLine(id)
+        {
+            if(confirm("Are you  sure ??"))
+            {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Line/DeleteLine/" + id,
+              
+                    success: function (response) {
+                        if(response.result ==1 )
+                        {
+                            
+                            $("#record_" + id).remove();
+                        }else{
+                        
+                            alert("delete fail ***")
+                        }
+                    },
+                })
+            }
+        }
+    </script>
+
+}

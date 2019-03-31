@@ -1,0 +1,357 @@
+﻿@model busSystem_v8.Models.BusFeautersRelation
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "EditBusWithFeature";
+}
+
+<h2>Add Bus </h2>
+
+@*@RenderPage("~/Views/Shared/_header.cshtml")*@
+
+<!-- add bus feature with   BusFeaturesRelation classes in <busFeaturesViewModel >  view model class            -->
+
+@*@using (Html.BeginForm())
+{
+  *@
+<form id="edit_bus_form">
+
+    @Html.HiddenFor(l => l.Buses.BusID)
+    @Html.HiddenFor(l => l.BusFeatures.ID)
+
+
+
+    <div class="form-group ">
+        @Html.LabelFor(x => x.Buses.BusNumber)
+        @Html.TextBoxFor(x => x.Buses.BusNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.BusNumber)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.CompanyName)
+        @Html.TextBoxFor(x => x.Buses.CompanyName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.CompanyName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.DriverName)
+        @Html.TextBoxFor(x => x.Buses.DriverName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.DriverName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.Color)
+        @Html.TextBoxFor(x => x.Buses.Color, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.Color)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.Price)
+        @Html.TextBoxFor(x => x.Buses.Price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.Price)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.NumOfBags)
+        @Html.TextBoxFor(x => x.Buses.NumOfBags, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.NumOfBags)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.NumOfSeats)
+        @Html.TextBoxFor(x => x.Buses.NumOfSeats, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.NumOfSeats)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Buses.AvailableSeats)
+        @Html.TextBoxFor(x => x.Buses.AvailableSeats, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Buses.AvailableSeats)
+    </div>
+    <!------------------------------------------------------------------------------------------>
+    <!--      Bus features   -->
+    <h2>Add Bus Feature</h2>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.BusFeatures.AirConditioner)
+        @Html.CheckBoxFor(x => x.BusFeatures.AirConditioner, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BusFeatures.AirConditioner)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.BusFeatures.Drinks)
+        @Html.CheckBoxFor(x => x.BusFeatures.Drinks, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BusFeatures.Drinks)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.BusFeatures.Food)
+        @Html.CheckBoxFor(x => x.BusFeatures.Food, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BusFeatures.Food)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.BusFeatures.TV)
+        @Html.CheckBoxFor(x => x.BusFeatures.TV, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BusFeatures.TV)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.BusFeatures.Wc)
+        @Html.CheckBoxFor(x => x.BusFeatures.Wc, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BusFeatures.Wc)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.BusFeatures.wifi)
+        @Html.CheckBoxFor(x => x.BusFeatures.wifi, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.BusFeatures.wifi)
+    </div>
+
+    <!-- bus feature relations-->
+    @*
+        <div class="form-group">
+            @Html.LabelFor(x => x.bus_feature_relation.)
+            @Html.TextBoxFor(x => x.bus_feature.wifi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.bus_feature.wifi)
+        </div>
+    *@
+   <!-- <button type="submit" class="btn btn-primary"> save </button>-->
+    <button type="button" value="Create" class="btn btn-primary" id="edit_bus_btn"> Edit </button>
+</form>
+
+    <hr />
+    @*}*@
+
+
+    @section Scripts{
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+        <script>
+
+            $(document).ready(function () {
+
+                $("#edit_bus_btn").click(function () {
+
+                    if ($("#edit_bus_form").valid()) {
+                        line_data = $("#edit_bus_form").serialize();
+
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/BusFeatureRelation/EditBusWithFeature",
+                            data: line_data,
+                            success: function (response) {
+                                alert("Inserted Successfully ..")
+                            },
+
+
+                        })
+                    }
+                })
+            })
+
+        </script>
+
+    }
+
+    <!-- add bus feature with   BusFeaturesRelation classes in <busFeaturesViewModel >  view model class            -->
+    @*   @model Bus_System_V1.ViewModel.busFeaturesViewModel   *@
+
+    @*
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group ">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.BusNumber)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.BusNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.BusNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.CompanyName)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.CompanyName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.CompanyName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.DriverName)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.DriverName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.DriverName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.Color)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.Color, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.Color)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.Price)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.Price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.Price)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.NumOfBags)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.NumOfBags, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.NumOfBags)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.NumOfSeats)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.NumOfSeats, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.NumOfSeats)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.Buses.AvailableSeats)
+                @Html.TextBoxFor(x => x.bus_feature_relation.Buses.AvailableSeats, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.Buses.AvailableSeats)
+            </div>
+            <!------------------------------------------------------------------------------------------>
+            <!--      Bus features   -->
+            <h2>Add Bus Feature</h2>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.BusFeatures.AirConditioner)
+                @Html.CheckBoxFor(x => x.bus_feature_relation.BusFeatures.AirConditioner, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.BusFeatures.AirConditioner)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.BusFeatures.Drinks)
+                @Html.CheckBoxFor(x => x.bus_feature_relation.BusFeatures.Drinks, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.BusFeatures.Drinks)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.BusFeatures.Food)
+                @Html.CheckBoxFor(x => x.bus_feature_relation.BusFeatures.Food, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.BusFeatures.Food)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.BusFeatures.TV)
+                @Html.CheckBoxFor(x => x.bus_feature_relation.BusFeatures.TV, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.BusFeatures.TV)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.BusFeatures.Wc)
+                @Html.CheckBoxFor(x => x.bus_feature_relation.BusFeatures.Wc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.BusFeatures.Wc)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature_relation.BusFeatures.wifi)
+                @Html.CheckBoxFor(x => x.bus_feature_relation.BusFeatures.wifi, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature_relation.BusFeatures.wifi)
+            </div>
+    *@
+    <!-- bus feature relations-->
+    @*
+        <div class="form-group">
+            @Html.LabelFor(x => x.bus_feature_relation.)
+            @Html.TextBoxFor(x => x.bus_feature.wifi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.bus_feature.wifi)
+        </div>
+    *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--       add bus feature with   bus & BusFeature classes in <busFeaturesViewModel >  view model class            -->
+    @*   @model Bus_System_V1.ViewModel.busFeaturesViewModel   *@
+
+    <!-- ******************************************************************************--->
+    @*
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group ">
+                @Html.LabelFor(x => x.bus.BusNumber)
+                @Html.TextBoxFor(x => x.bus.BusNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.BusNumber)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.CompanyName)
+                @Html.TextBoxFor(x => x.bus.CompanyName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.CompanyName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.DriverName)
+                @Html.TextBoxFor(x => x.bus.DriverName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.DriverName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.Color)
+                @Html.TextBoxFor(x => x.bus.Color, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.Color)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.Price)
+                @Html.TextBoxFor(x => x.bus.Price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.Price)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.NumOfBags)
+                @Html.TextBoxFor(x => x.bus.NumOfBags, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.NumOfBags)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.NumOfSeats)
+                @Html.TextBoxFor(x => x.bus.NumOfSeats, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.NumOfSeats)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus.AvailableSeats)
+                @Html.TextBoxFor(x => x.bus.AvailableSeats, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus.AvailableSeats)
+            </div>
+            <!------------------------------------------------------------------------------------------>
+            <!--      Bus features   -->
+            <h2>Add Bus Feature</h2>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature.AirConditioner)
+                @Html.CheckBoxFor(x => x.bus_feature.AirConditioner, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature.AirConditioner)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature.Drinks)
+                @Html.CheckBoxFor(x => x.bus_feature.Drinks, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature.Drinks)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature.Food)
+                @Html.CheckBoxFor(x => x.bus_feature.Food, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature.Food)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature.TV)
+                @Html.CheckBoxFor(x => x.bus_feature.TV, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature.TV)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature.Wc)
+                @Html.CheckBoxFor(x => x.bus_feature.Wc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature.Wc)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.bus_feature.wifi)
+                @Html.CheckBoxFor(x => x.bus_feature.wifi, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.bus_feature.wifi)
+            </div>
+    *@
+    <!-- bus feature relations-->
+    @*
+        <div class="form-group">
+            @Html.LabelFor(x => x.bus_feature_relation.)
+            @Html.TextBoxFor(x => x.bus_feature.wifi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.bus_feature.wifi)
+        </div>
+    *@

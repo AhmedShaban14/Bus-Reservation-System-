@@ -1,0 +1,116 @@
+﻿@model busSystem_v8.Models.User
+@{
+    ViewBag.Title = "Register";
+}
+
+<!-- Button trigger modal -->
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Sign up or login
+</button>*@
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content ">
+        <!-- Nav tabs -->
+        <div class="container1">
+            <ul class="nav nav-tabs col-md-12" role="tablist">
+                <li role="presentation" class="active"><a href="#SignUp" aria-controls="home" role="tab" data-toggle="tab">Sign up</a></li>
+                <li role="presentation"><a href="#Login" aria-controls="profile" role="tab" data-toggle="tab">Login</a></li>
+            </ul>
+            <div style="clear:both"></div>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="SignUp">
+              @using (Html.BeginForm("Register", "User",FormMethod.Post, new { @class = "loginForm" ,id="regForm"}))
+                  {
+
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Name, new { @type = "text", @class = "form-control" })
+                            <span class="input-group-addon" id="basic-addon2">User Name</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Email, new { @type = "email", @class = "form-control" })
+                            <span class="input-group-addon" id="basic-addon2">Email</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control col-sm-12" })
+                            <span class="input-group-addon" id="basic-addon2">Password</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-sm-12", @type = "text" })
+                            <span class="input-group-addon" id="basic-addon2">Address</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Job, new { @type = "text", @class = "form-control" })
+                            <span class="input-group-addon" id="basic-addon2">Job</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Ssn, new { @type = "number", @class = "form-control" })
+                            <span class="input-group-addon" id="basic-addon2">Ssn</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Age, new { @type = "number", @class = "form-control col-sm-12" })
+                            <span class="input-group-addon" id="basic-addon2">Age</span>
+                        </div>
+                        <button type="submit" id="Save" class="btn btn-danger">Sig Up</button>
+                    }
+
+                </div>
+                <div role="tabpanel" class="tab-pane login" id="Login">
+          @using (Html.BeginForm("Login", "User", new { @class = "loginForm" }))
+                     {
+                        <div class="input-group col-sm-12">
+                            @Html.TextBoxFor(m => m.Email, new { @type = "email", @class = "form-control" })
+                            <span class="input-group-addon" id="basic-addon2">Email</span>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control col-sm-12" })
+                            <span class="input-group-addon" id="basic-addon2">Password</span>
+                        </div>
+                        <button type="submit" class="btn btn-success">Login</button>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+@section Scripts{
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(document).ready(function () {
+        /* Ajax */
+        $("#Save").click(function () {
+            mydata = $("#regForm").serialize();
+            if ($("#regForm").valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: "/User/Register",
+                    data: mydata,
+                    success: function (response) {
+                        if (response.result==1) {
+                            alert("done");
+                        }
+                        else {
+                            alert("not done");
+                        }
+                    }
+                })
+            }
+        });
+        /**/
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+        $('#myTabs a[href="#profile"]').tab('show') // Select tab by name
+        $('#myTabs a:first').tab('show') // Select first tab
+        $('#myTabs a:last').tab('show') // Select last tab
+        $('#myTabs li:eq(2) a').tab('show') // Select third tab (0-indexed)
+    });
+</script>
+}

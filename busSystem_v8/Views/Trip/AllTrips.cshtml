@@ -1,0 +1,95 @@
+﻿@model IEnumerable<busSystem_v8.Models.Trip>
+
+@{
+    ViewBag.Title = "AllTrips";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AllTrips</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddTrip")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.days.DayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lines.From)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lines.To)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr id="record_@item.Id">
+        <td>
+            @Html.DisplayFor(modelItem => item.days.DayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lines.From)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lines.To)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditTrip", new { id=item.Id }) |
+            @Html.ActionLink("Details", "showTrip", new { id=item.Id }) |
+         @*   @Html.ActionLink("Delete", "DeleteTrip", new { id=item.Id })*@
+            <button type="button" value="Create" class="btn btn-primary" id="delete_trip_btn" onclick="DeleteLine(@item.Id)"> delete </button>
+
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+    <script>
+
+        function DeleteTrip(id)
+        {
+            if(confirm("Are you  sure ??"))
+            {
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Trip/DeleteTrip/" + id,
+
+                    success: function (response) {
+                        if(response.result ==1 )
+                        {
+
+                            $("#record_" + id).remove();
+                        }else{
+
+                            alert("delete fail ***")
+                        }
+                    },
+                })
+            }
+        }
+    </script>
+
+}

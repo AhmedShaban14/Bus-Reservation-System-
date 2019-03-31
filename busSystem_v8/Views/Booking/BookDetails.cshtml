@@ -1,0 +1,80 @@
+﻿@model busSystem_v8.View_Models.UserBooking
+
+@{
+    ViewBag.Title = "BookDetails";
+}
+
+<h2>BookDetails</h2>
+
+@using (Html.BeginForm())
+{
+
+    @Html.HiddenFor(x => x.books.BokkingID)
+    <div>
+        <h4>Booking</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.books.Buses.DriverName)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.Buses.DriverName)
+
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.books.lines.From)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.lines.From)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.books.payment_types.pay_type)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.payment_types.pay_type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.books.trips.Id)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.trips.Id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.books.users.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.users.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.books.chosenChairs)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.chosenChairs)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.books.TotalCost)
+            </dt>
+
+            <dd>
+                @Html.DisplayNameFor(model => model.books.TotalCost)
+            </dd>
+
+        </dl>
+    </div>
+}
+<p>
+
+    @Html.ActionLink("Back to Booking", "BookThird")
+</p>

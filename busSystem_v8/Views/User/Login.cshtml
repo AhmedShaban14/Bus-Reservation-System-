@@ -1,0 +1,35 @@
+﻿@using busSystem_v8.Models
+@RenderPage("~/Views/Shared/_header.cshtml")
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container">
+
+    <h2>Login</h2>
+    @{var info = Session["userData"] as User;}
+    @if (info != null)
+    {
+        if (info.user_types_id == 1)
+        {
+            <h1>you are an Admin</h1>
+        }
+        if (info.user_types_id == 2)
+        {
+            <h1>you are a user</h1>
+        }
+
+        <div class="list-group  col-md-4">
+            <div class="list-group-item"> @info.Name </div>
+            <div class="list-group-item"> @info.Email </div>
+            <div class="list-group-item"> @info.Address </div>
+            <div class="list-group-item"> @info.wallet </div>
+        </div>
+        <div class="clear"></div>
+        <form action="logout">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+    }
+
+</div>

@@ -1,0 +1,98 @@
+﻿@model busSystem_v8.Models.Booking
+
+@{
+    ViewBag.Title = "BookDetailsNew";
+}
+
+<h2>BookDetailsNew</h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <table class="table  table-responsive table-hover table-striped ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.users.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.lines.From)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.lines.To)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.payment_types.pay_type)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Buses.DriverName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.trips.Id)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.chosenChairs)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.users.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.lines.From)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.lines.To)
+            </td>
+
+
+
+            <td>
+                @Html.DisplayFor(model => model.Buses.DriverName)
+            </td>
+
+
+
+            <td>
+                @Html.DisplayFor(model => model.payment_types.pay_type)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(model => model.trips.Id)
+            </td>
+
+
+
+            <td>
+                @Html.DisplayFor(model => model.chosenChairs)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(model => model.TotalCost)
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+<p style="font-size:25px;float:left; margin:44px;">
+    @Html.ActionLink("Edit Booking Data", "EditBook", new { id = Model.BokkingID })
+    <br />
+    @Html.ActionLink("Add New Booking", "New")
+    <br />
+    @Html.ActionLink("Display Booking Data", "BookThird")
+</p>

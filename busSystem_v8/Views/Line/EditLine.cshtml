@@ -1,0 +1,80 @@
+﻿@model busSystem_v8.Models.Line
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Line</h2>
+
+            @Html.ActionLink("Delete Line", "DeleteLine" ,new {Model.Id})
+@*
+@using (Html.BeginForm())
+{
+    *@
+<form id="edit_line_form">
+
+    @Html.HiddenFor(l => l.Id)
+    <div class="form-group ">
+        @Html.LabelFor(x => x.NumOfBuses)
+        @Html.TextBoxFor(x => x.NumOfBuses, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.NumOfBuses)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.NumOfHours)
+        @Html.TextBoxFor(x => x.NumOfHours, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.NumOfHours)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.From)
+        @Html.TextBoxFor(x => x.From, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.From)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.To)
+        @Html.TextBoxFor(x => x.To, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.To)
+    </div>
+
+   @* <button type="submit" class="btn btn-primary"> save </button>*@
+    <button type="button" value="Create" class="btn btn-primary" id="edit_Line_btn"> Edit </button>
+
+    <hr />
+    @*}*@
+    </form>
+
+    @section Scripts{
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+        <script>
+
+            $(document).ready(function () {
+
+                $("#edit_Line_btn").click(function () {
+
+                    if ($("#edit_line_form").valid()) {
+                        line_data = $("#edit_line_form").serialize();
+
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Line/EditLine",
+                            data: line_data,
+                            success: function (response) {
+                                alert("Inserted Successfully ..")
+                            },
+
+
+                        })
+                    }
+                })
+            })
+
+        </script>
+
+    }

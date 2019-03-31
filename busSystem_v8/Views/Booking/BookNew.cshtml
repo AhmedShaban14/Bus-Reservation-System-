@@ -1,0 +1,61 @@
+﻿@model IEnumerable<busSystem_v8.View_Models.UserBooking>
+
+@{
+    ViewBag.Title = "BookNew";
+}
+
+<h2>BookingDisplay</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.books.chosenChairs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.books.TotalCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.books.User_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.books.Line_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.books.Payment_Type_Id)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.books.chosenChairs)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.books.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.books.User_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.books.Line_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.books.Payment_Type_Id)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit Customers", "EditCust", new { id = item.books.BokkingID }) |
+                @Html.ActionLink("Details Of Customers", "Details", new { id = item.books.BokkingID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.books.BokkingID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@RenderPage("~/Views/Shared/_footer.cshtml")

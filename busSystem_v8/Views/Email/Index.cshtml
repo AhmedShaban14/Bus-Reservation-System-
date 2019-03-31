@@ -1,0 +1,25 @@
+﻿@model busSystem_v8.Models.gmail
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="col-md-4 col-md-offset-2">
+
+    @using (Html.BeginForm("Index", "Email", FormMethod.Post, new { @class = "loginForm" }))
+    {
+        @Html.TextBoxFor(m => m.to, new { @class = "form-control", @placeholder = "send to" })
+        <br />
+        @Html.TextBoxFor(m => m.from, new { @class = "form-control", @placeholder = "send from" })
+        <br />
+        @Html.TextBoxFor(m => m.pass, new { @class = "form-control", @type = "password", @placeholder = "enter sender password" })
+        <br />
+        @Html.TextBoxFor(m => m.subject, new { @class = "form-control", @placeholder = "enter you Subject" })
+        <br />
+        @Html.TextBoxFor(m => m.body, new { @class = "form-control", @placeholder = "enter you Body" })
+        <br />
+    <button type="submit" class="btn btn-danger">Send Email</button>
+}
+</div>
+<div style="clear:both"></div>
+@ViewBag.msg

@@ -1,0 +1,137 @@
+﻿@model IEnumerable<busSystem_v8.Models.Booking>
+<link href="~/Content/bootswatch.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "BookThird";
+}
+<h2>Display Booking Data </h2>
+<div class="bs-component" style="min-height:500px;">
+    <table class="table table-striped table-hover  col-sm-12 ">
+        <thead>
+            <tr class="">
+                <th>
+                    @Html.DisplayNameFor(model => model.users.Name)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.lines.From)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.lines.To)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.payment_types.pay_type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Buses.DriverName)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.trips.StartDate)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.chosenChairs)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.trips.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.users.wallet)
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="record_@item.BokkingID" class="info">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.users.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lines.From)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lines.To)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.payment_types.pay_type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Buses.DriverName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.trips.StartDate)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.chosenChairs)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.trips.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.users.wallet)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit Booking", "EditBook", new { id = item.BokkingID }, new { @class = "btn btn-success" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Booking Details ", "BookDetailsNew", new { id = item.BokkingID }, new { @class = "btn btn-success" })
+                    </td>
+                    <td>
+                        <a href="~/PaypalHome/Index" class="btn btn-default">Pay by Paypal</a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" id="delete" onclick="DeleteBooking(@item.BokkingID)">Delete</button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p style="text-align:center;font-size:25px;">
+        @Html.ActionLink("Create New Booking ", "New")
+    </p>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function DeleteBooking(id) {
+            if (confirm("Are You Sure ?!")) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Booking/DeleteBook/" + id,
+                    success: function (response) {
+                        if (response.result == 1) {
+                            $("#record_" + id).remove();
+
+                            //alert("Deleted Well")
+                            //$("#success").slideUp(1000);
+                        }
+                        else {
+                            alert("Deleted Failed")
+                            //$("#fail").slideDown(2000);
+                            //$("#fail").slideUp(1000);
+                        }
+
+                    }
+                })
+            }
+        }
+    </script>
+}
+@RenderPage("~/Views/Shared/_footer.cshtml")

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<busSystem_v8.Models.BusFeautersRelation>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "AllBuses";
+}
+
+<h2>AllBuses</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddBusWithFeature")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Buses.DriverName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BusFeatures.ID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr id="record_@item.Buses.BusID">
+        <td>
+            @Html.DisplayFor(modelItem => item.Buses.DriverName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BusFeatures.ID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditBusWithFeature", new {  id=item.Bus_Id }) |
+            @Html.ActionLink("Details", "showBusWithFeature", new {  id=item.Bus_Id }) |
+  @*          @Html.ActionLink("Delete", "DeleteBusWithFeature", new { busid=item.Buses.BusID,featureId=item.BusFeatures.ID  }) *@
+        
+            <button type="button" value="Create" class="btn btn-primary" id="delete_busWithFeatuers_btn" onclick="DeletebuswithFeatures(@item.Buses.BusID,@item.BusFeatures.ID)"> Delete </button>
+
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+    <script>
+
+        function DeletebuswithFeatures(BusID,BusFeaturesID)
+        {
+            if(confirm("Are you  sure ??"))
+            {
+
+                var data = {};
+                data.busid=BusID;
+                data.featureid = BusFeaturesID;
+                
+
+                $.ajax({
+                    type: "GET",
+                    //data: JSON.stringify({ busId: 'BusID', featureID: 'BusFeaturesID' }),
+                    url: "/BusFeatureRelation/DeleteBusWithFeature?busid=" + BusID + "&featureId=" + BusFeaturesID,
+                   
+                    
+                    success: function (response) {
+                        if(response.result ==1 )
+                        {
+
+                            $("#record_" + BusID).remove();
+                        }else{
+
+                            alert("delete fail ***")
+                        }
+                    },
+                })
+            }
+        }
+    </script>
+
+}
+

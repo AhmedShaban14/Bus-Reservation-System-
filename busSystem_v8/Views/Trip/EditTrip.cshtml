@@ -1,0 +1,156 @@
+﻿@model busSystem_v8.ViewModel.Trip_line_Day_View_Model
+
+@{
+    ViewBag.Title = "EditTrip";
+}
+
+<h2>EditTrip</h2>
+@*
+@using (Html.BeginForm("EditTrip"))
+{
+    *@
+<form id="edit_Trip_form">
+
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(l => l.tr.Id)
+    <h4>Add Trip</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(x => x.tr.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.tr.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.tr.StartDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.tr.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.tr.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.tr.EndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.tr.Lines_Id, "Lines_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x=> x.tr.Lines_Id, new SelectList(Model.lin, "Id", "From"), null, htmlAttributes: new { @id = "toFrom" , @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.tr.Lines_Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.tr.Lines_Id, "To", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*
+                <select name="trip.tr.Lines_Id">
+                    @foreach (var item in Model.lin)
+                    {
+                        <option value=@item.Id> @item.From - @item.To </option>
+                    }
+                </select>
+                new SelectList(Model.lin, "Id", "To")
+            *@
+            @Html.DropDownListFor(x => x.tr.lines.To, new List<SelectListItem>(), null, htmlAttributes: new { @id = "toId", @class = "form-control" })
+           @Model.tr.lines.Id;
+             @Html.ValidationMessageFor(x => x.tr.Lines_Id, "", new { @class = "text-danger" })
+            @Html.HiddenFor(s=>s.tr.Lines_Id , new { @id ="to_id"})
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.tr.Dayes_Id, "Dayes_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.tr.Dayes_Id, new SelectList(Model.dy, "DayID", "DayName"), null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.tr.Dayes_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+
+            @*<input type="submit" value="Create" class="btn btn-default" />*@
+            <button type="button" value="Create" class="btn btn-primary" id="edit_Trip_btn"> Edit </button>
+           
+         @*   @Html.HiddenFor(l => l.tr.Lines_Id = enrty.line_id)*@
+
+
+        </div>
+</form>
+    @*}*@
+
+
+
+    @section Scripts{
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+
+
+
+
+        <script>
+            $(document).ready(function () {
+
+                $("#toFrom").change(function () {
+
+                    line_id = $(this).val();
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Trip/GetToTrip/" + line_id,
+
+                        success: function (response) {
+                            $("#toId").empty();
+                            $("#toId").append("<option>select destination </option>")
+
+                            response.forEach(function (entry) {
+                                $("#toId").append("<option value ='" + entry.line_id + " '>" + entry.To + "</option>")
+                                $to_Id = entry.line_id;
+
+
+                                $("#toId").value
+                                @*Model.tr.Lines_Id =entry.line_id; *@
+
+                            });
+                        }
+
+
+                    })
+
+                })
+            })
+
+
+
+            $(document).ready(function () {
+
+                $("#edit_Trip_btn").click(function () {
+                    line_data = $("#edit_Trip_form").serialize();
+
+                    if ($("#edit_Trip_form").valid()) {
+
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Trip/EditTrip",
+                            data: line_data,
+                            success: function (response) {
+                                alert("Inserted Successfully ..")
+                            },
+
+
+                        })
+                    }
+                })
+            })
+
+        </script>
+
+    }
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
